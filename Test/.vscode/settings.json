@@ -1,0 +1,20 @@
+{
+  "C_Cpp.intelliSenseEngine": "default",
+  "idf.espIdfPathWin": "C:\\Users\\Nitan\\esp\\v5.5.2\\esp-idf",
+  "idf.pythonInstallPath": "C:\\Users\\Nitan\\.espressif\\tools\\idf-python\\3.11.2\\python.exe",
+  "idf.openOcdConfigs": [
+    "board/esp32c3-builtin.cfg"
+  ],
+  "idf.portWin": "COM6",
+  "idf.toolsPathWin": "C:\\Users\\Nitan\\.espressif",
+  "idf.customExtraVars": {
+    "IDF_TARGET": "esp32c3"
+  },
+  "clangd.path": "C:\\Users\\Nitan\\.espressif\\tools\\esp-clang\\esp-19.1.2_20250312\\esp-clang\\bin\\clangd.exe",
+  "clangd.arguments": [
+    "--background-index",
+    "--query-driver=**",
+    "--compile-commands-dir=c:\\Users\\Nitan\\Test\\build"
+  ],
+  "idf.flashType": "UART"
+}
