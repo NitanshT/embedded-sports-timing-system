@@ -47,8 +47,8 @@
 // RGB LED (COMMON ANODE -> active-low per channel)
 // User intensity is 0..255 where 255 = fully ON (bright).
 #define RGB_RED_GPIO    GPIO_NUM_16
-#define RGB_GREEN_GPIO  GPIO_NUM_4
-#define RGB_BLUE_GPIO   GPIO_NUM_13
+#define RGB_GREEN_GPIO  GPIO_NUM_13
+#define RGB_BLUE_GPIO   GPIO_NUM_4
 
 // 74HC595 chain -> 2x 7-seg (minutes)
 #define SHIFT_DATA      GPIO_NUM_23
@@ -1716,6 +1716,8 @@ static void stepper_task(void *arg)
                 step_backward_one();
                 esp_rom_delay_us(HOME_DELAY_US);
             }
+            step_backward_one(); // Drift correction
+            esp_rom_delay_us(HOME_DELAY_US);
             seq_idx = 0;
             step_write(seq_idx);
             step_pos = 0;
