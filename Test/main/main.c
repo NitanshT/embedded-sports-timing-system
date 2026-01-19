@@ -1716,6 +1716,8 @@ static void stepper_task(void *arg)
                 step_backward_one();
                 esp_rom_delay_us(HOME_DELAY_US);
             }
+            step_backward_one(); // Drift correction
+            esp_rom_delay_us(HOME_DELAY_US);
             seq_idx = 0;
             step_write(seq_idx);
             step_pos = 0;
