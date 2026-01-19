@@ -3,7 +3,8 @@
   "idf.espIdfPathWin": "C:\\Users\\Nitan\\esp\\v5.5.2\\esp-idf",
   "idf.pythonInstallPath": "C:\\Users\\Nitan\\.espressif\\tools\\idf-python\\3.11.2\\python.exe",
   "idf.openOcdConfigs": [
-    "board/esp32c3-builtin.cfg"
+    "interface/ftdi/esp32_devkitj_v1.cfg",
+    "target/esp32.cfg"
   ],
   "idf.portWin": "COM6",
   "idf.toolsPathWin": "C:\\Users\\Nitan\\.espressif",
