@@ -18,7 +18,7 @@
 
 #include "driver/rmt.h"
 
-// ===================== PIN CONFIG =====================
+// PIN CONFIG
 
 // I2C (OLED + AM2320)
 #define I2C_PORT        I2C_NUM_0
@@ -75,7 +75,7 @@
 #define NEC_0_SPACE     560
 #define NEC_1_SPACE    1690
 
-// ---- forward declarations ----
+// forward declarations
 static void ir_on_nec(uint8_t addr, uint8_t cmd, bool is_repeat);
 static void handle_ir_events(uint8_t oled_addr);
 static void start_countdown_and_go(uint8_t oled_addr);
@@ -155,7 +155,7 @@ static volatile bool timer_running = false;
 static volatile int64_t timer_start_us = 0;
 static volatile bool stepper_home_request = false;
 
-// ===================== RGB (LEDC PWM, common anode = active-low) =====================
+// RGB (LEDC PWM, common anode = active-low)
 
 typedef enum {
     RGB_MODE_OFF = 0,
@@ -171,18 +171,18 @@ typedef struct {
     uint32_t period_ms;
     uint8_t duty_cycle_percent;
 } rgb_mode_state_t;
-
+// portMUX initializes a portMUX variable to handle interrupt services and prevent data corruption
 static portMUX_TYPE g_rgb_mux = portMUX_INITIALIZER_UNLOCKED;
 static rgb_mode_state_t g_rgb_state = { .mode = RGB_MODE_OFF, .r = 0, .g = 0, .b = 0, .period_ms = 500, .duty_cycle_percent = 50 };
 static TaskHandle_t g_rgb_task = NULL;
 static bool g_rgb_inited = false;
 
-// Improve IR repeat handling (NEC repeat frames)
+// Improve IR repeat handling 
 static uint8_t  g_last_cmd  = 0;
 static uint8_t  g_last_addr = 0;
 static int64_t  g_last_cmd_us = 0;
 
-// ===================== IR reliability improvements =====================
+// IR reliability improvements
 
 #ifndef IR_DEBUG_VERBOSE
 #define IR_DEBUG_VERBOSE 0
@@ -295,7 +295,7 @@ static nec_decode_result_t nec_try_decode(const ir_seg_t *s, int n, uint8_t mark
             if (fail_reason) *fail_reason = NEC_FAIL_NONE;
             return NEC_DECODE_REPEAT;
         }
-        // If the last mark was truncated, still treat as repeat.
+
         if (is_repeat) *is_repeat = true;
         if (fail_reason) *fail_reason = NEC_FAIL_NONE;
         return NEC_DECODE_REPEAT;
@@ -686,7 +686,7 @@ static void request_reset(void)
     }
 }
 
-// ===================== BUZZER (LEDC PWM) =====================
+// BUZZER (LEDC PWM)
 
 #define BUZZER_DUTY_DEFAULT_PERCENT  33
 
@@ -806,7 +806,7 @@ static void buzzer_show_warning_then_continue(uint8_t oled_addr)
     portEXIT_CRITICAL(&g_rgb_mux);
 }
 
-// ===================== RGB (LEDC PWM) =====================
+// RGB (LEDC PWM)
 
 static const ledc_mode_t      RGB_LEDC_MODE = LEDC_LOW_SPEED_MODE;
 static const ledc_timer_t     RGB_LEDC_TIMER = LEDC_TIMER_1;
@@ -991,8 +991,8 @@ static void start_countdown_and_go(uint8_t oled_addr)
         char line[2] = { (char)('0' + i), '\0' };
         const int scale_digit = 4;
         const int top_reserved = 24;
-        const int avail_h = OLED_H - top_reserved;
-        const int digit_h = 7 * scale_digit;
+        const int avail_h = OLED_H - top_reserved; // Check how many height pixels are available
+        const int digit_h = 7 * scale_digit; // Make symbol larger than initial size
         const int y_digit = top_reserved + (avail_h - digit_h) / 2;
 
         // Width for a single glyph is 5 columns, scaled
@@ -1012,7 +1012,7 @@ static void start_countdown_and_go(uint8_t oled_addr)
     fb_draw_text_centered(0, "SPORT TIMER");
 
     {
-        const char *go = "GO!";
+        const char *go = "GO!"; // write to address of go
         const int scale_go = 3;
         const int top_reserved = 24;
         const int avail_h = OLED_H - top_reserved;
@@ -1055,7 +1055,7 @@ static uint16_t crc16_modbus(const uint8_t *data, int len)
     return crc;
 }
 
-// ===================== OLED (SSD1306 minimal) =====================
+// OLED (SSD1306 minimal)
 #define OLED_BUF_SIZE (OLED_W * OLED_H / 8)
 
 static esp_err_t i2c_probe(uint8_t addr);
@@ -1231,6 +1231,7 @@ static void fb_draw_text_centered(int y, const char *s)
     fb_draw_text(x, y, s);
 }
 
+// Helper Function to ensure scaled symbols are drawn centered. Calls fb_draw_text_scaled(x, y, s, scale)
 static void fb_draw_text_centered_scaled(int y, const char *s, int scale)
 {
     if (scale < 1) scale = 1;
@@ -1240,7 +1241,7 @@ static void fb_draw_text_centered_scaled(int y, const char *s, int scale)
     fb_draw_text_scaled(x, y, s, scale);
 }
 
-static int fb_center_x_for_width(int width_px)
+static int fb_center_x_for_width(int width_px) //
 {
     int x = (OLED_W - width_px) / 2;
     if (x < 0) x = 0;
@@ -1280,6 +1281,7 @@ static uint8_t oled_detect_addr(void)
     return 0;
 }
 
+// Function to write command to OLED, requires address and command byte as inputs.
 static esp_err_t oled_write_cmd(uint8_t addr, uint8_t cmd_byte)
 {
     i2c_cmd_handle_t cmd = i2c_cmd_link_create();
@@ -1293,6 +1295,7 @@ static esp_err_t oled_write_cmd(uint8_t addr, uint8_t cmd_byte)
     return err;
 }
 
+// function to write data chunk to OLED, requires address, it takes the memory address of the data variable (changing that variable directly), and a size_t variable len.
 static esp_err_t oled_write_data_chunk(uint8_t addr, const uint8_t *data, size_t len)
 {
     i2c_cmd_handle_t cmd = i2c_cmd_link_create();
@@ -1306,6 +1309,7 @@ static esp_err_t oled_write_data_chunk(uint8_t addr, const uint8_t *data, size_t
     return err;
 }
 
+// Same as above
 static esp_err_t oled_write_data(uint8_t addr, const uint8_t *data, size_t len)
 {
     const size_t CHUNK = 16;
@@ -1317,6 +1321,7 @@ static esp_err_t oled_write_data(uint8_t addr, const uint8_t *data, size_t len)
     return ESP_OK;
 }
 
+// Initialization of OLED
 static esp_err_t oled_init(uint8_t addr)
 {
     const uint8_t init_cmds[] = {
@@ -1344,6 +1349,7 @@ static esp_err_t oled_init(uint8_t addr)
     return ESP_OK;
 }
 
+// function to write to entire OLED.
 static esp_err_t oled_set_full_window(uint8_t addr)
 {
     esp_err_t err;
@@ -1355,14 +1361,14 @@ static esp_err_t oled_set_full_window(uint8_t addr)
     err = oled_write_cmd(addr, 0x07); if (err) return err;
     return ESP_OK;
 }
-
+// Unsafe flush
 static esp_err_t oled_flush(uint8_t addr)
 {
     esp_err_t err = oled_set_full_window(addr);
     if (err != ESP_OK) return err;
     return oled_write_data(addr, fb, sizeof(fb));
 }
-
+// safe flush
 static void oled_flush_safe(uint8_t oled_addr)
 {
     esp_err_t err = oled_flush(oled_addr);
@@ -1372,8 +1378,8 @@ static void oled_flush_safe(uint8_t oled_addr)
     }
 }
 
-// ===================== AM2320 =====================
-
+// AM2320 Functions
+// Function to change the temp_c and rh_percent variables. Takes pointers to them as parameters.
 static esp_err_t am2320_read(float *temp_c, float *rh_percent)
 {
     // Try a few times (AM2320 can be flaky)
@@ -1463,15 +1469,15 @@ static esp_err_t am2320_read(float *temp_c, float *rh_percent)
 }
 
 
-// ===================== HC-SR04 (interrupt pulse width) =====================
-
+// HC-SR04 (interrupt pulse width)
+// Usage of volatile varible (can change "randomly") which is required for the t_rise_us, since it updates.
 static QueueHandle_t echo_queue;
 
 typedef struct {
     int64_t width_us;
 } echo_event_t;
 
-static volatile int64_t t_rise_us = 0;
+static volatile int64_t t_rise_us = 0; // volatile
 
 static void IRAM_ATTR echo_isr(void *arg)
 {
@@ -1492,6 +1498,7 @@ static void IRAM_ATTR echo_isr(void *arg)
     }
 }
 
+// initialization of HCSR04
 static void hcsr04_init(void)
 {
     gpio_config_t trig_conf = {
@@ -1519,6 +1526,7 @@ static void hcsr04_init(void)
     gpio_isr_handler_add(ECHO_GPIO, echo_isr, NULL);
 }
 
+//
 static void hcsr04_trigger(void)
 {
     gpio_set_level(TRIG_GPIO, 0);
@@ -1540,7 +1548,7 @@ static float hcsr04_read_cm(void)
     return 0.0f;
 }
 
-// ===================== RACER EDGE DETECT -> TIMER TOGGLE =====================
+// RACER EDGE DETECT -> TIMER TOGGLE
 
 #define THRESH_CM        10.0f
 #define COOLDOWN_MS      1000
@@ -1548,6 +1556,7 @@ static float hcsr04_read_cm(void)
 static bool racer_near = false;
 static int64_t last_trigger_us = 0;
 
+// Function to update racer 'position'
 static bool racer_update(float dist_cm)
 {
     bool near_now = (dist_cm > 0.0f && dist_cm < THRESH_CM);
@@ -1564,11 +1573,11 @@ static bool racer_update(float dist_cm)
     return event;
 }
 
-// ===================== 2x7-SEG via 74HC595 chain =====================
+// 2x7-SEG via 74HC595 chain
 
 static inline void busy_wait(void) { *(volatile uint32_t *)GPIO_IN_REG; }
 
-// your digit encoding (kept as-is)
+// digit encoding
 static uint8_t digits[10] = {
     0xFC, // 0
     0x60, // 1
@@ -1582,7 +1591,7 @@ static uint8_t digits[10] = {
     0xE6  // 9
 };
 
-// shift out LSB first
+// shift out LSB (least significant bit) first
 static void shift_out(uint8_t x)
 {
     gpio_set_level(SHIFT_LATCH, 0);
@@ -1597,6 +1606,7 @@ static void shift_out(uint8_t x)
     }
 }
 
+// Latch functionality, shift out 8-bit data containing information about the minutes.
 static void display_minutes(uint8_t minutes)
 {
     uint8_t tens = minutes / 10;
@@ -1610,7 +1620,7 @@ static void display_minutes(uint8_t minutes)
 }
 
 
-// ===================== STEPPER (1 rev / 60s when timer running) =====================
+// STEPPER (1 rev / 60s when timer running)
 #define STEPS_PER_REV  4096
 #define REV_TIME_US    (60ULL * 1000000ULL)
 
@@ -1752,7 +1762,7 @@ static void stepper_task(void *arg)
 
 
 
-// ===================== app_main =====================
+// app_main (We've tried to "reduce" how much clutter is included in the app main)
 
 void app_main(void)
 {
