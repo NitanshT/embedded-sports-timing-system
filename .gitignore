@@ -1,0 +1,71 @@
+# OS files
+.DS_Store
+.AppleDouble
+.LSOverride
+.directory
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Editor folders
+.vscode/
+
+# Temporary files
+*~
+*.swp
+*.swo
+*.bak
+*.tmp
+
+# Log files
+*.log
+
+# Build artifacts and directories
+build/
+**/build/
+dist/
+out/
+*.o
+*.a
+*.out
+*.exe
+*.bin
+*.elf
+*.map
+flasher_args.json
+
+# ESP-IDF specific files
+sdkconfig
+sdkconfig.old
+managed_components/
+.espressif/
+/components/.idf/
+**/components/.idf/
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+install_manifest.txt
+CTestTestfile.cmake
+
+# Python cache / envs
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+*.egg-info/
+venv/
+.venv/
+env/
+
+# Language server / tooling
+.clangd/
+.ccls-cache/
+compile_commands.json
+
+# User-specific config
+*.user
+*.workspace
+*.suo
+*.sln.docstates
