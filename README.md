@@ -251,7 +251,7 @@ Authors
 
 - Emil M. Østergaard Knarreborg
 - Nitansh Thaker
-- aldemar Kartikaya Mcclean
+- Valdemar Kartikaya Mcclean
 - Rasmus Aasberg-Petersen
 
 
