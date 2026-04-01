@@ -73,22 +73,24 @@ The project concept is a **sports timer** that combines both analog and digital 
 
 ```text
 .
+├── .gitignore
 ├── README.md
 ├── Test/
-│   ├── CMakeLists.txt
-│   ├── .gitignore
 │   ├── .clangd
-│   ├── .devcontainer/
-│   ├── .vscode/
+│   ├── CMakeLists.txt
 │   └── main/
 │       ├── CMakeLists.txt
-│       └── main.c
+│       ├── buzzer.c
+│       ├── buzzer.h
+│       ├── main.c
+│       ├── rgb.c
+│       └── rgb.h
 └── docs/
-    ├── images/
-    |   ├── system.jpg
-    |   └── circuit-diagram.png
     ├── architecture.md
     ├── hardware.md
+    ├── images/
+    │   ├── circuit-diagram.png
+    │   └── system.jpg
     └── pinout.md
 ```
 
@@ -236,8 +238,6 @@ Split the code into modules such as:
 - am2320.c
 - hcsr04.c
 - stepper.c
-- rgb.c
-- buzzer.c
 - ui.c  
 
 - Replace or improve motion detection for more reliable lap sensing
