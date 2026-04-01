@@ -87,6 +87,7 @@ The project concept is a **sports timer** that combines both analog and digital 
     └── images/
         ├── system.jpg
         └── circuit-diagram.png
+```
 
 Current code is concentrated in `Test/main/main.c`, which contains:
 
