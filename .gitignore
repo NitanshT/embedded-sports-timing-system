@@ -69,3 +69,4 @@ compile_commands.json
 *.workspace
 *.suo
 *.sln.docstates
+Test/.vscode/
