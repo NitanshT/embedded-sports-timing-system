@@ -16,8 +16,6 @@ The system combines multiple peripherals into one integrated prototype:
 - an **IR receiver + ELEGOO remote** provide user control
 - a **piezo buzzer** and **RGB LED** provide feedback during countdowns, warnings, laps, and finish states
 
-The project was built as a **4-person DTU course project** and is presented here as an academic/portfolio repository rather than production software.
-
 ## Features
 
 - ESP32-based embedded application written in C
