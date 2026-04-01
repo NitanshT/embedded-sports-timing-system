@@ -84,9 +84,12 @@ The project concept is a **sports timer** that combines both analog and digital 
 │       ├── CMakeLists.txt
 │       └── main.c
 └── docs/
-    └── images/
-        ├── system.jpg
-        └── circuit-diagram.png
+    ├── images/
+    |   ├── system.jpg
+    |   └── circuit-diagram.png
+    ├── architecture.md
+    ├── hardware.md
+    └── pinout.md
 ```
 
 Current code is concentrated in `Test/main/main.c`, which contains:
