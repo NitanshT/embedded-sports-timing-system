@@ -140,22 +140,24 @@ I2C device addresses:
 
 ### Build
 
+**bash**
 ```bash
 cd Test
 idf.py set-target esp32
 idf.py build
 ```
+**Flash**
 ```Flash
 idf.py -p <PORT> flash
 Monitor serial output
 idf.py -p <PORT> monitor
 ```
+**Example on Linux/macOS:**
 ```Example on Linux/macOS:
-
 idf.py -p /dev/ttyUSB0 flash monitor
 ```
+**Example on Windows:**
 ```Example on Windows:
-
 idf.py -p COM3 flash monitor
 ```
 ### How the System Works
