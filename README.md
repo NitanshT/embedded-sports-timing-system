@@ -144,111 +144,112 @@ I2C device addresses:
 cd Test
 idf.py set-target esp32
 idf.py build
-
-Flash
+```
+```Flash
 idf.py -p <PORT> flash
 Monitor serial output
 idf.py -p <PORT> monitor
-
-Example on Linux/macOS:
+```
+```Example on Linux/macOS:
 
 idf.py -p /dev/ttyUSB0 flash monitor
-
-Example on Windows:
+```
+```Example on Windows:
 
 idf.py -p COM3 flash monitor
-How the System Works
-The system starts in POWER OFF mode.
-The user turns it on using the IR remote.
-The user can configure the target number of laps.
-Pressing start begins a countdown on the OLED with buzzer and RGB feedback.
-After GO!, the system enters an ARMED state.
-When the ultrasonic sensor detects a crossing, the timer starts.
-Each further detected crossing increments the lap counter.
-When the configured lap target is reached, the race finishes and the system shows the final state.
-The user can stop or reset the system from the remote.
-User Interface / Feedback
-OLED
+```
+### How the System Works
+- The system starts in POWER OFF mode.
+- The user turns it on using the IR remote.
+- The user can configure the target number of laps.
+- Pressing start begins a countdown on the OLED with buzzer and RGB feedback.
+- After GO!, the system enters an ARMED state.
+- When the ultrasonic sensor detects a crossing, the timer starts.
+- Each further detected crossing increments the lap counter.
+- When the configured lap target is reached, the race finishes and the system shows the final state.
+- The user can stop or reset the system from the remote.
+
+### User Interface / Feedback
+**OLED**
 
 The OLED shows:
 
-system state
-current race time
-laps completed
-warning messages
-temperature and humidity
-reaction time
-RGB LED
+- system state
+- current race time
+- laps completed
+- warning messages
+- temperature and humidity
+- reaction time
 
-The RGB LED is used for state feedback, including:
+**RGB LED**
 
-OFF
-READY
-COUNTDOWN
-ARMED
-RUNNING
-STOPPED
-FINISHED
-warning blink behavior
-Buzzer
+The **RGB LED** is used for state feedback, including:
 
-The buzzer is used for:
+- OFF
+- READY
+- COUNTDOWN
+- ARMED
+- RUNNING
+- STOPPED
+- FINISHED
+- warning blink behavior
 
-countdown beeps
-warning pattern
-lap confirmation
-finish pattern
-Environmental Warning Logic
+**Buzzer**
 
-The AM2320 sensor is used to monitor track conditions.
+The **buzzer** is used for:
+
+- countdown beeps
+- warning pattern
+- lap confirmation
+- finish pattern
+
+**Environmental Warning Logic**
+
+The **AM2320 sensor** is used to monitor track conditions.
 
 Current warning thresholds in the code:
 
-temperature warning at 30.0 °C
-humidity warning at 40.0% RH
+temperature warning at **30.0 °C**
+humidity warning at **40.0% RH**
 
-If either threshold is exceeded, the OLED shows a warning and the buzzer/RGB LED provide warning feedback before continuing.
+If either threshold is exceeded, the **OLED** shows a warning and the **buzzer/RGB LED** provide warning feedback before continuing.
 
-Known Limitations
+## Known Limitations
 
 This is a student prototype and has several practical limitations:
 
-The ultrasonic sensor can produce inconsistent triggers depending on distance, angle, reflection, clothing, and surrounding noise.
-The stepper motor does not provide absolute position feedback, so homing is approximate.
-The code is currently organized mainly in one large main.c file rather than separate modules.
-Hardware setup is breadboard-based and intended as a prototype, not a robust product enclosure.
-The exact ESP-IDF version used for the final project should be documented explicitly.
-Future Improvements
+- The ultrasonic sensor can produce inconsistent triggers depending on distance, angle, reflection, clothing, and surrounding noise.
+- The stepper motor does not provide absolute position feedback, so homing is approximate.
+- The code is currently organized mainly in one large main.c file rather than separate modules.
+- Hardware setup is breadboard-based and intended as a prototype, not a robust product enclosure.
+- The exact ESP-IDF version used for the final project should be documented explicitly.
+
+## Future Improvements
 Split the code into modules such as:
-ir.c
-oled.c
-am2320.c
-hcsr04.c
-stepper.c
-rgb.c
-buzzer.c
-ui.c
-Replace or improve motion detection for more reliable lap sensing
-Add clearer wiring documentation and schematic files
-Improve code comments and reduce hardcoded values
-Add demo media and architecture diagrams
-Add a small CI build check for ESP-IDF
+- ir.c
+- oled.c
+- am2320.c
+- hcsr04.c
+- stepper.c
+- rgb.c
+- buzzer.c
+- ui.c  
+
+- Replace or improve motion detection for more reliable lap sensing
+- Add clearer wiring documentation and schematic files
+- Improve code comments and reduce hardcoded values
+- Add demo media and architecture diagrams
+- Add a small CI build check for ESP-IDF
 Authors
 
-DTU 02112 Final Project, Group 5:
+## DTU 02112 Final Project, Group 5:
 
-Emil M. Østergaard Knarreborg
-Nitansh Thaker
-Valdemar Kartikaya Mcclean
-Rasmus Aasberg-Petersen
+- Emil M. Østergaard Knarreborg
+- Nitansh Thaker
+- aldemar Kartikaya Mcclean
+- Rasmus Aasberg-Petersen
 
-Reported contribution split in the final report:
 
-Stepper motor code, hardware, debugging, and schematic: Valdemar
-IR sensor, remote, and ultrasonic hardware/code: Nitansh
-Shift registers / 7-segment display, general wiring, debugging, and schematic: Emil
-I2C protocol and OLED display code: Rasmus
-
-Notes
+## Notes
 
 This repository is shared as a student course project and currently does not include an open-source license.
