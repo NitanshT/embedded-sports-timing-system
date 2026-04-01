@@ -249,8 +249,8 @@ Authors
 
 ## DTU 02112 Final Project, Group 5:
 
-- Emil M. Østergaard Knarreborg
 - Nitansh Thaker
+- Emil M. Østergaard Knarreborg
 - Valdemar Kartikaya Mcclean
 - Rasmus Aasberg-Petersen
 
